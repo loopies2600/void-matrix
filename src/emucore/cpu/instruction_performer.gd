@@ -179,7 +179,7 @@ func perform_jphl() -> void:
 	print("Implement JPHL")
 	
 func perform_di() -> void:
-	print("Implement DI")
+	cpu.do_master_interrupt = false
 	
 func perform_ei() -> void:
 	print("Implement EI")

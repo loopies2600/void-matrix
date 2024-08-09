@@ -46,6 +46,7 @@ var current_instruction : Opcode
 # cpu state
 var halted : bool = false
 var stepping : bool = false
+var do_master_interrupt : bool = false
 
 func _init() -> void:
 	_setup_instruction_set()
@@ -64,6 +65,8 @@ func _setup_instruction_set() -> void:
 	INSTRUCTIONS[0xAF] = Opcode.new(Opcode.InstructionTypes.IN_XOR, Opcode.AddressingModes.AM_R, Opcode.RegisterTypes.RT_A)
 	# JP NZ a16
 	INSTRUCTIONS[0xC3] = Opcode.new(Opcode.InstructionTypes.IN_JP, Opcode.AddressingModes.AM_D16)
+	# DI
+	INSTRUCTIONS[0xF3] = Opcode.new(Opcode.InstructionTypes.IN_DI)
 	
 func boot(_emulator_instance : EmulatorInstance) -> void:
 	emu = _emulator_instance
