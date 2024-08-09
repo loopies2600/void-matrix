@@ -1,0 +1,185 @@
+[gd_scene load_steps=20 format=3 uid="uid://hvvdnk5cyi0a"]
+
+[ext_resource type="Theme" uid="uid://dpv5wjqtrfwrq" path="res://data/themes/main_theme.tres" id="1_ouv8v"]
+[ext_resource type="Script" path="res://scenes/tests.gd" id="1_xa6f2"]
+[ext_resource type="Script" path="res://src/gui/main_window/main_window.gd" id="2_358bf"]
+[ext_resource type="Script" path="res://src/gui/main_window/file_button.gd" id="4_7dodm"]
+[ext_resource type="PackedScene" uid="uid://dvuqgs0cn82av" path="res://src/emucore/emulator_instance.tscn" id="4_cfpuk"]
+[ext_resource type="PackedScene" uid="uid://be1y3cr77e25q" path="res://scenes/about_window.tscn" id="5_2uhwm"]
+[ext_resource type="Script" path="res://src/gui/main_window/options_button.gd" id="5_andef"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_y4jfp"]
+blend_mode = 1
+
+[sub_resource type="Curve" id="Curve_i6al4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_57o8p"]
+curve = SubResource("Curve_i6al4")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lwneb"]
+particle_flag_disable_z = true
+spread = 180.0
+initial_velocity_min = 26.88
+initial_velocity_max = 220.43
+gravity = Vector3(0, 0, 0)
+tangential_accel_min = 32.26
+tangential_accel_max = 32.26
+scale_min = 0.0
+scale_max = 4.0
+scale_curve = SubResource("CurveTexture_57o8p")
+color = Color(0.706065, 0.0982886, 0.618666, 1)
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+turbulence_noise_scale = 2.3
+turbulence_influence_min = 0.398
+turbulence_influence_max = 0.398
+turbulence_initial_displacement_min = 51.5
+turbulence_initial_displacement_max = 51.5
+
+[sub_resource type="Gradient" id="Gradient_rvwn2"]
+offsets = PackedFloat32Array(0, 0.454545, 1)
+colors = PackedColorArray(0.396651, 0.607342, 0.664865, 1, 0.131396, 0.391759, 0.56982, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pvgrl"]
+gradient = SubResource("Gradient_rvwn2")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="Gradient" id="Gradient_6dkfl"]
+offsets = PackedFloat32Array(0, 0.454545, 1)
+colors = PackedColorArray(0.0847185, 0.165422, 0.187078, 1, 0.00902906, 0.0707364, 0.121428, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0037y"]
+gradient = SubResource("Gradient_6dkfl")
+width = 8
+height = 8
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.5, 0)
+metadata/_snap_enabled = true
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lmxuc"]
+blend_mode = 3
+
+[sub_resource type="Gradient" id="Gradient_cjw54"]
+colors = PackedColorArray(0.61339, 0.61339, 0.61339, 1, 1, 1, 1, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_r1smu"]
+frequency = 0.0737
+domain_warp_enabled = true
+domain_warp_amplitude = 21.31
+domain_warp_frequency = -5.725
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_krqnq"]
+width = 160
+height = 144
+seamless = true
+color_ramp = SubResource("Gradient_cjw54")
+noise = SubResource("FastNoiseLite_r1smu")
+
+[node name="MainWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ouv8v")
+script = ExtResource("2_358bf")
+
+[node name="TESTS CLASS" type="Node" parent="."]
+script = ExtResource("1_xa6f2")
+
+[node name="EmulatorInstance" parent="." instance=ExtResource("4_cfpuk")]
+
+[node name="BGCol" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0819025, 0.0732255, 0.170085, 1)
+
+[node name="BlastParticles" type="GPUParticles2D" parent="."]
+visible = false
+material = SubResource("CanvasItemMaterial_y4jfp")
+amount = 1024
+process_material = SubResource("ParticleProcessMaterial_lwneb")
+texture = SubResource("GradientTexture2D_pvgrl")
+lifetime = 16.0
+local_coords = true
+
+[node name="BlastParticles2" type="GPUParticles2D" parent="BlastParticles"]
+material = SubResource("CanvasItemMaterial_y4jfp")
+position = Vector2(24, 16)
+amount = 1024
+process_material = SubResource("ParticleProcessMaterial_lwneb")
+texture = SubResource("GradientTexture2D_0037y")
+lifetime = 16.0
+local_coords = true
+
+[node name="NoiseOver" type="TextureRect" parent="."]
+material = SubResource("CanvasItemMaterial_lmxuc")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("NoiseTexture2D_krqnq")
+stretch_mode = 1
+
+[node name="MainPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+
+[node name="Buttons" type="HBoxContainer" parent="MainPanel"]
+layout_mode = 2
+
+[node name="FileButton" type="MenuButton" parent="MainPanel/Buttons" node_paths=PackedStringArray("emulator")]
+layout_mode = 2
+text = "File"
+item_count = 2
+popup/item_0/text = "Load ROM"
+popup/item_1/text = "Exit"
+popup/item_1/id = 1
+script = ExtResource("4_7dodm")
+emulator = NodePath("../../../EmulatorInstance")
+
+[node name="FileDialog" type="FileDialog" parent="MainPanel/Buttons/FileButton"]
+title = "Open a File"
+ok_button_text = "Open"
+file_mode = 0
+filters = PackedStringArray("*.gb; Game Boy ROMs")
+use_native_dialog = true
+
+[node name="OptionsButton" type="MenuButton" parent="MainPanel/Buttons" node_paths=PackedStringArray("about_window")]
+layout_mode = 2
+text = "Options"
+item_count = 1
+popup/item_0/text = "About"
+script = ExtResource("5_andef")
+about_window = NodePath("../../../AboutWindow")
+
+[node name="AboutWindow" parent="." instance=ExtResource("5_2uhwm")]
+visible = false
+
+[node name="RomTitle" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "No rom loaded."
+horizontal_alignment = 1
+vertical_alignment = 1

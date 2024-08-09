@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvuqgs0cn82av"]
+
+[ext_resource type="Script" path="res://src/emucore/emulator_instance.gd" id="1_bxvac"]
+
+[node name="EmulatorInstance" type="Node"]
+script = ExtResource("1_bxvac")
